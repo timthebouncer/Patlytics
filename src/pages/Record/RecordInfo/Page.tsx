@@ -22,7 +22,7 @@ const Page=()=>{
         onGetRecord()
     }, [])
 
-    if(record === null) return <>No data</>
+    if(record === null) return <div className="flex justify-center items-center h-full text-xl">No data</div>
 
     return <>
         <PatentInfringementAnalyzer
