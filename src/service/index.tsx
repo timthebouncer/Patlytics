@@ -16,14 +16,12 @@ export async function initDB() {
 
     const idbRcd = {
         async get(key) {
-            console.log(key)
             return (await db).get('records', key)
         },
         async getAll():Promise<Infringing.InfringingResponse[]> {
             return (await (await db).getAll('records')) || [].reverse()
         },
         async set(val) {
-            console.log(val,'val')
             return await db.add('records', val);
         },
         async delete(key) {
