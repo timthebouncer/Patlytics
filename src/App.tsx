@@ -15,11 +15,13 @@ const App:FC=()=> {
   const [companyList, setCompanyList] = useState<Company[]>([]);
   const [patentList, setPatentList] = useState<Patent[]>([]);
   const [result, setResult] = useState<Infringing.InfringingResponse | null>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false)
 
   const handleAnalyze = useCallback(
-      async ({ patentId, companyName }: { patentId: string; companyName: string }) => {
+      async ({ patentId, companyName }: { patentId: string; companyName: string }):Promise<{ patentId: string; companyName: string }> => {
 
         try {
+          setIsAnalyzing(true)
           const patent = patentList.filter((patent) => patent.publication_number === patentId);
           const company = companyList.filter((company) => company.name === companyName);
 
@@ -50,6 +52,8 @@ const App:FC=()=> {
           } else {
             console.error(err.message);
           }
+        } finally {
+          setIsAnalyzing(false)
         }
       },
       [patentList, companyList]
@@ -78,11 +82,12 @@ const App:FC=()=> {
     getPatentList()
   }, []);
 
-
-
   return (
     <div className="max-w-7xl mx-auto">
-      <PatentComparisonForm onAnalyze={handleAnalyze} />
+      <PatentComparisonForm
+          onAnalyze={handleAnalyze}
+          isAnalyzing={isAnalyzing}
+      />
       {result !== null && (
         <>
           <PatentInfringementAnalyzer
