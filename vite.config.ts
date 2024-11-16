@@ -4,21 +4,24 @@ import checker from "vite-plugin-checker";
 import { config } from 'dotenv';
 
 config();
-export default defineConfig({
-    plugins: [
-        react(),
-        checker({
-            typescript: true,
-        }),
-    ],
-    optimizeDeps: {
-        force: true,
-        esbuildOptions: {
-            loader: {
+export default defineConfig(config => {
+    return {
+        plugins: [
+            react(),
+            checker({
+                typescript: true,
+            }),
+        ],
+        // base: config.command === 'build' ? './' : undefined,
+        optimizeDeps: {
+            force: true,
+            esbuildOptions: {
+                loader: {
+                },
             },
         },
-    },
-    define: {
-        'process.env': process.env
+        define: {
+            'process.env': process.env
+        }
     }
 })
