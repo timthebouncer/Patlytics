@@ -1,0 +1,45 @@
+// tsconfig.json
+
+/* Visit https://aka.ms/tsconfig.json to read more about this file */
+{
+  "compilerOptions": {
+    /* Basic Options */
+    "target": "ES2018", // compile 後要支援到的 ECMAScript 版本
+    "module": "commonjs", // compile 後程式碼會用 commonjs 來處理模組的匯出匯入
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": false, // 是否允許匯入 js 檔，會影響到 include 時解析的副檔名是否包含（.js 和 .jsx）
+    "declaration": true,
+    "noImplicitAny": false,
+    // 如果沒設定會套用預設值（TS 自動判斷）
+    // 有「機會」導致 src 的資料夾也一起被 build 到 dist 資料夾中
+    // 例如 TS 自動把 rootDir 判斷為 { "rootDir": "." }
+    "rootDir": "src",
+
+    // 預設 tsc 會直接把編譯好的 js 檔放在與 ts 檔相同的路徑，但這樣檔案會很散亂，因此全部放到 dist
+    "outDir": "dist",
+
+    /* Strict Type-Checking Options */
+    "strict": true,
+
+    /* Additional Checks */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true, // 確保 switch case 都會有 break 或 return
+
+    /* Module Resolution Options */
+    "baseUrl": "./", // 匯入模組時，路徑可以使用從 baseUrl 開始，而不需要 ./../ 這種寫法
+    "paths": {
+      "@": ["src"] // 將 @ map 到 src
+    },
+    "esModuleInterop": false,
+
+    /* Source Map Options */
+    "sourceMap": true,
+
+    /* Advanced Options */
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true // 確保檔案的大小寫一致，避免某些作業系統對大小寫不敏感
+  },
+  "include": ["src/**/*.ts"], // compiler 要做用在哪些檔案上
+  "exclude": ["**/*.spec.ts","app_/**/*.ts","**/*.d.ts","node_modules"]
+}
