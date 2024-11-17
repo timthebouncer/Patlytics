@@ -15,7 +15,7 @@ const client = new OpenAI({
 })
 
 const App:FC=()=> {
-  const [companyList] = useState<Company[]>([c.companies]);
+  const [companyList] = useState<Company[]>(c.companies);
   const [patentList] = useState<Patent[]>(patents);
   const [result, setResult] = useState<Infringing.InfringingResponse | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false)
