@@ -5,6 +5,9 @@ import OpenAI from "openai";
 import {initDB} from "./service";
 import {Company, Infringing, Patent} from "./type";
 import {answer_format_prompt, question_prompt} from "./utils/prompt";
+import c from "../public/company_products.json"
+import patents from "../public/patents.json"
+
 
 const client = new OpenAI({
   apiKey: process.env.OPEN_AI_API_KEY,
@@ -12,8 +15,8 @@ const client = new OpenAI({
 })
 
 const App:FC=()=> {
-  const [companyList, setCompanyList] = useState<Company[]>([]);
-  const [patentList, setPatentList] = useState<Patent[]>([]);
+  const [companyList] = useState<Company[]>([c.companies]);
+  const [patentList] = useState<Patent[]>(patents);
   const [result, setResult] = useState<Infringing.InfringingResponse | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false)
 
@@ -59,28 +62,6 @@ const App:FC=()=> {
       [patentList, companyList]
   );
 
-  const getCompanies=()=>{
-    fetch('../../public/company_products.json')
-        .then(response => response.json() as unknown as Record<string, []>)
-        .then(data =>{
-          setCompanyList(data.companies)
-        })
-        .catch(error => console.error('Error fetching public:', error));
-  }
-
-  const getPatentList=()=>{
-    fetch('../../public/patents.json')
-        .then(response => response.json() as unknown as Patent[])
-        .then(data =>{
-          setPatentList(data)
-        })
-        .catch(error => console.error('Error fetching public:', error));
-  }
-
-  useEffect(() => {
-    getCompanies()
-    getPatentList()
-  }, []);
 
   return (
     <div className="max-w-7xl mx-auto">
