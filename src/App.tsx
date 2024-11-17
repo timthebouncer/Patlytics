@@ -7,6 +7,7 @@ import {Company, Infringing, Patent} from "./type";
 import {answer_format_prompt, question_prompt} from "./utils/prompt";
 import c from "../public/company_products.json"
 import patents from "../public/patents.json"
+import {searchCompanies} from "./utils/search";
 
 
 const client = new OpenAI({
@@ -26,9 +27,9 @@ const App:FC=()=> {
         try {
           setIsAnalyzing(true)
           const patent = patentList.filter((patent) => patent.publication_number === patentId);
-          const company = companyList.filter((company) => company.name === companyName);
+          const company =  searchCompanies(companyList, companyName)
 
-          if (patent.length === 0 && company.length === 0) {
+          if (patent.length === 0 || company.length === 0) {
             throw new Error("Not match");
           }
 
@@ -36,7 +37,7 @@ const App:FC=()=> {
             messages: [
               {
                 role: 'user',
-                content: `This is a task ${question_prompt(company, patent)}, ${answer_format_prompt()}.
+                content: `This is a task ${question_prompt(company[0], patent)}, ${answer_format_prompt()}.
             Replace the product names, analysis_date, infringement likelihoods, relevant claims, explanations, and specific features with the actual details based on the analysis of the company and patent provided.`,
               },
             ],
@@ -53,7 +54,7 @@ const App:FC=()=> {
           if (err instanceof OpenAI.RateLimitError) {
             console.error("Rate limit exceeded");
           } else {
-            console.error(err.message);
+            window.alert(err.message)
           }
         } finally {
           setIsAnalyzing(false)
