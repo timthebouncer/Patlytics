@@ -10,7 +10,7 @@ const Page=()=>{
     const getRecordList= async ()=>{
         const { _, idbRcd } = await initDB();
         try {
-            const res = await idbRcd.getAll()
+            const res = ((await idbRcd.getAll()) || []).reverse()
             setRecordList(res)
         } catch (err){
             throw new Error(err.message)
