@@ -17,7 +17,7 @@
 
 FROM nginx:alpine
 COPY dist /usr/share/nginx/html/
-COPY data /usr/share/nginx/html/data
+COPY public /usr/share/nginx/html/public
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

@@ -60,21 +60,21 @@ const App:FC=()=> {
   );
 
   const getCompanies=()=>{
-    fetch('../../data/company_products.json')
+    fetch('../../public/company_products.json')
         .then(response => response.json() as unknown as Record<string, []>)
         .then(data =>{
           setCompanyList(data.companies)
         })
-        .catch(error => console.error('Error fetching data:', error));
+        .catch(error => console.error('Error fetching public:', error));
   }
 
   const getPatentList=()=>{
-    fetch('../../data/patents.json')
+    fetch('../../public/patents.json')
         .then(response => response.json() as unknown as Patent[])
         .then(data =>{
           setPatentList(data)
         })
-        .catch(error => console.error('Error fetching data:', error));
+        .catch(error => console.error('Error fetching public:', error));
   }
 
   useEffect(() => {
