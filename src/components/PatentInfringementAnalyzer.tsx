@@ -6,6 +6,9 @@ interface Props extends Infringing.InfringingResponse{}
 const PatentInfringementAnalyzer=({result}:{result: Props})=> {
   return (
       <div className="max-w-4xl mx-auto">
+          <div className="font-bold mb-4">
+              {result.patent_id} : {result.company_name}
+          </div>
         {result.top_infringing_products.map((item, index) => (
             <div key={index} className="mb-8 p-6 border rounded-lg bg-white shadow-sm">
               <h3 className="text-lg font-semibold mb-2">{item.product_name}</h3>
