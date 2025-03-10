@@ -33,7 +33,3 @@ If you are using Nginx, you need to enter localhost along with the port you prov
 ### Demo
 
 https://patlytics-seven.vercel.app/
-
-#### Q:
-
-"I find that one of the bonus questions, the fuzzy match, is not very clear in the instructions. If you could provide me with more explanation, I will update the code immediately."
